@@ -628,9 +628,9 @@ export const LanguageToggle = () => {
       style={{ fontFamily: "'Montserrat', sans-serif", borderColor: "hsl(217 20% 92%)", background: "hsl(36 33% 98%)" }}
       title={lang === "he" ? "Switch to English" : "עבור לעברית"}
     >
-      <span style={{ color: lang === "he" ? "hsl(220 12% 45%)" : "#001830", fontWeight: lang === "he" ? 400 : 700 }}>EN</span>
+      <span style={{ color: lang === "he" ? "hsl(220 12% 45%)" : "#000810", fontWeight: lang === "he" ? 400 : 700 }}>EN</span>
       <span style={{ color: "hsl(220 12% 45%)" }}>/</span>
-      <span style={{ color: lang === "he" ? "#001830" : "hsl(220 12% 45%)", fontWeight: lang === "he" ? 700 : 400 }}>עב</span>
+      <span style={{ color: lang === "he" ? "#000810" : "hsl(220 12% 45%)", fontWeight: lang === "he" ? 700 : 400 }}>עב</span>
     </button>
   );
 };

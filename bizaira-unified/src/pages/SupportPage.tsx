@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Send, ChevronDown, ChevronUp, MessageCircle, HelpCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-const NAVY   = "#0D2344";
-const PURPLE = "#0D2344";
+const NAVY   = "#000810";
+const PURPLE = "#000810";
 
 const SupportPage = () => {
   const { t, lang } = useI18n();
@@ -201,7 +201,8 @@ const SupportPage = () => {
           <button
             onClick={handleSend}
             disabled={!name || !email || !message || status === "sending"}
-            className="w-full gradient-glow glow-shadow text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="w-full text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 hover:opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:opacity-40"
+            style={{ backgroundColor: NAVY }}
           >
             <Send size={16} />
             {status === "sending"

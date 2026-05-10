@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { getSavedGuestAnswers, createGuestSession } from "@/lib/guest-session";
 import { safeSetSessionItem } from "@/lib/safe-storage";
 
-const DEEP_MIDNIGHT_BLUE = "#001F3F";
+const DEEP_MIDNIGHT_BLUE = "#000810";
 const PEARL_WHITE = "#F9FAFB";
 const INPUT_BG = "#F9F9FB";
 

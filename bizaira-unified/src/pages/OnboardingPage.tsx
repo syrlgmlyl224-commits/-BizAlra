@@ -222,7 +222,7 @@ const OnboardingPage = () => {
         {step === 3 && (
           <div className="animate-float-up">
             <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-foreground mb-2" style={{fontFamily: "'Playfair Display', serif", color: "#001830"}}>
+              <h2 className="text-3xl font-bold text-foreground mb-2" style={{fontFamily: "'Playfair Display', serif", color: "#000810"}}>
                 {t("onboarding.page.welcomeUser").replace("{{userName}}", userName)}
               </h2>
               <p className="text-sm text-muted-foreground" style={{fontFamily: "'Montserrat', sans-serif"}}>

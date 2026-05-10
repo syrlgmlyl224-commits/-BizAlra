@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { createGuestSession, updateGuestSession, getSavedGuestAnswers } from "@/lib/guest-session";
 
-const MIDNIGHT_BLACK = "#001F3F";
+const MIDNIGHT_BLACK = "#000810";
 const INPUT_BG = "#F9F9FB";
 const PEARL_WHITE = "#F9FAFB";
 

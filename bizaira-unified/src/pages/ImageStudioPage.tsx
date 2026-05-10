@@ -424,8 +424,10 @@ const ImageStudioPage = () => {
               </p>
               <Link
                 to="/pricing"
-                className="inline-block bg-[#001F3F] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#002A4F] transition-colors"
-                style={{ fontFamily: "'Assistant', sans-serif" }}
+                className="inline-block text-white px-6 py-3 rounded-xl font-semibold transition-colors"
+                style={{ backgroundColor: "#000810", fontFamily: "'Assistant', sans-serif" }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#000a1a")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#000810")}
               >
                 {isHe ? "לשדרג כעת" : "Upgrade now"}
               </Link>

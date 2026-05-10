@@ -11,7 +11,7 @@ const LANG_OPTIONS = [
 
 type LangOption = (typeof LANG_OPTIONS)[number]["id"];
 
-const NAVY = "#001F3F";
+const NAVY = "#000810";
 const CREAM = "#F9FAFB";
 const WHITE = "#FFFFFF";
 

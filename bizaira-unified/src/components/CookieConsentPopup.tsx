@@ -45,7 +45,7 @@ const CookieConsentPopup = ({ onConsent, isVisible }: CookieConsentPopupProps) =
     setShowCustomize(false);
   };
 
-  const DEEP_MIDNIGHT_BLUE = "#001F3F";
+  const DEEP_MIDNIGHT_BLUE = "#000810";
   const PEARL_WHITE = "#F9FAFB";
   const LIGHT_GRAY = "#E5E7EB";
 

@@ -8,7 +8,7 @@ import { safeGetItem, safeSetItem } from "@/lib/safe-storage";
 import { safeGetSessionItem, safeRemoveSessionItem } from "@/lib/safe-storage";
 
 // Luxury Color Palette
-const DEEP_MIDNIGHT_BLUE = "#001529";
+const DEEP_MIDNIGHT_BLUE = "#000810";
 const PEARL_WHITE = "#F9FAFB";
 
 const HomePage = () => {
@@ -43,7 +43,7 @@ const HomePage = () => {
       icon: User,
       title: isHe ? "אזור אישי" : "Personal Area",
       desc: isHe ? "נהל את הפרופיל שלך" : "Manage your profile",
-      path: "/dashboard",
+      path: "/profile",
     },
     {
       id: 3,

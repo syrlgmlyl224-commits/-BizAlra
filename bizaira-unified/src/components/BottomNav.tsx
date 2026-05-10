@@ -2,8 +2,8 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 import { Home, Wand2, User, HelpCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-const NAVY = "#011224";
-const ACTIVE = "#0D2344";
+const NAVY = "#000810";
+const ACTIVE = "#000a1a";
 
 const BottomNav = () => {
   const { t, lang } = useI18n();
@@ -21,7 +21,7 @@ const BottomNav = () => {
       label: t("nav.create")
     },
     { 
-      to: "/dashboard", 
+      to: "/profile", 
       icon: User, 
       label: t("nav.dashboard")
     },

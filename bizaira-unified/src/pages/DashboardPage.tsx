@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Wand2,
   CreditCard,
@@ -37,8 +37,7 @@ const TYPE_ICON: Record<CreationType, React.ComponentType<{ size?: number; strok
 
 const DashboardPage = () => {
   const { t, lang } = useI18n();
-  const { user } = useAuth();
-  const isHe = lang === "he";
+  const { user } = useAuth();  const navigate = useNavigate();  const isHe = lang === "he";
   const userName = user?.user_metadata?.full_name || (isHe ? "אורח" : "Guest");
 
   const [creations, setCreations] = useState<Creation[]>([]);
@@ -49,10 +48,14 @@ const DashboardPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/");
+      return;
+    }
     refreshData();
     window.addEventListener("storage", refreshData);
     return () => window.removeEventListener("storage", refreshData);
-  }, [refreshData]);
+  }, [refreshData, user]);
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString(isHe ? "he-IL" : "en-US", { day: "numeric", month: "short" });
@@ -94,7 +97,7 @@ const DashboardPage = () => {
       icon: Wand2,
       href: "/create",
       primary: true,
-      color: "#D4AF37",
+      color: "#000810",
     },
     {
       title: isHe ? "אזור אישי" : "Personal Area",
@@ -102,7 +105,7 @@ const DashboardPage = () => {
       icon: User,
       href: "/profile",
       primary: false,
-      color: "#D4AF37",
+      color: "#000810",
     },
     {
       title: isHe ? "מעקב פעילות" : "Activity Tracker",
@@ -110,7 +113,7 @@ const DashboardPage = () => {
       icon: TrendingUp,
       href: "/dashboard",
       primary: false,
-      color: "#D4AF37",
+      color: "#000810",
     },
     {
       title: isHe ? "ניהול מנוי" : "Subscription",
@@ -118,7 +121,7 @@ const DashboardPage = () => {
       icon: CreditCard,
       href: "/pricing",
       primary: false,
-      color: "#D4AF37",
+      color: "#000810",
     },
     {
       title: isHe ? "תמיכה" : "Support",
@@ -126,7 +129,7 @@ const DashboardPage = () => {
       icon: HeadphonesIcon,
       href: "/support",
       primary: false,
-      color: "#D4AF37",
+      color: "#000810",
     },
   ];
 
@@ -255,21 +258,21 @@ const DashboardPage = () => {
               >
                 <div className="p-8 h-full flex flex-col">
                   <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl border mb-6" style={{ borderColor: card.primary ? "rgba(255,255,255,0.2)" : "rgba(1,18,36,0.14)", backgroundColor: card.primary ? "rgba(255,255,255,0.1)" : "#FCF7EE" }}>
-                    <IconComponent size={26} strokeWidth={1.5} style={{ color: card.primary ? "#FFFFFF" : "#011224" }} />
+                    <IconComponent size={26} strokeWidth={1.5} style={{ color: card.primary ? "#FFFFFF" : "#000810" }} />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-3" style={{ fontWeight: 500, color: card.primary ? "#FFFFFF" : "#011224" }}>
+                  <h3 className="text-2xl font-semibold mb-3" style={{ fontWeight: 500, color: card.primary ? "#FFFFFF" : "#000810" }}>
                     {card.title}
                   </h3>
                   <p className="text-sm leading-7" style={{ fontWeight: 300, color: card.primary ? "rgba(255,255,255,0.86)" : "#5B5B5B" }}>
                     {card.description}
                   </p>
-                  <div className={`mt-6 h-1 rounded-full ${card.primary ? "bg-white/20" : "bg-[#D4AF37]/30 group-hover:bg-[#D4AF37]/50"}`} />
+                  <div className={`mt-6 h-1 rounded-full ${card.primary ? "bg-white/20" : "bg-[#000810]/30 group-hover:bg-[#000810]/50"}`} />
                 </div>
 
                 {/* Hover glow effect */}
                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                      style={{
-                       background: `linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%)`,
+                       background: `linear-gradient(135deg, rgba(0, 8, 16, 0.1) 0%, transparent 50%)`,
                        filter: 'blur(20px)',
                      }} />
               </Link>
@@ -300,7 +303,7 @@ const DashboardPage = () => {
                 onClick={refreshData}
                 className="group inline-flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-1"
                 style={{
-                  background: "#011224",
+                  background: "#000810",
                   border: "1px solid rgba(1, 18, 36, 0.12)",
                   color: "#FFFFFF",
                   fontWeight: 300,
@@ -327,8 +330,8 @@ const DashboardPage = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-6">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#011224]/10 group-hover:bg-[#011224]/15 transition-colors duration-300">
-                        {React.createElement(TYPE_ICON[creation.type], { size: 24, style: { color: "#011224" } })}
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#000810]/10 group-hover:bg-[#000810]/15 transition-colors duration-300">
+                        {React.createElement(TYPE_ICON[creation.type], { size: 24, style: { color: "#000810" } })}
                         </div>
                         <div>
                           <h4 className="text-lg font-semibold mb-1" style={{ fontWeight: 500, color: NAVY }}>
@@ -346,13 +349,13 @@ const DashboardPage = () => {
                           style={{
                           background: "rgba(1, 18, 36, 0.06)",
                           border: "1px solid rgba(1, 18, 36, 0.12)",
-                          color: copiedId === creation.id ? "#4CAF50" : "#011224",
+                          color: copiedId === creation.id ? "#4CAF50" : "#000810",
                           }}
                         >
                           {copiedId === creation.id ? (
                             <Check size={18} />
                           ) : (
-                            <Copy size={18} className="group-hover/btn:text-[#0D2344]" />
+                            <Copy size={18} className="group-hover/btn:text-[#000810]" />
                           )}
                         </button>
                         <button
@@ -361,7 +364,7 @@ const DashboardPage = () => {
                           style={{
                           background: "rgba(1, 18, 36, 0.06)",
                           border: "1px solid rgba(1, 18, 36, 0.12)",
-                          color: "#011224",
+                          color: "#000810",
                           }}
                         >
                           <Download size={18} />

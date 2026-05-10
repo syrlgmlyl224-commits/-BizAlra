@@ -21,7 +21,7 @@ type LangOption = {
   value: "en" | "he";
 };
 
-const NAVY = "#001A33";
+const NAVY = "#000810";
 const BLACK = "#000000";
 const WHITE = "#FFFFFF";
 const LIGHT_GRAY = "#E8E8E8";
@@ -147,9 +147,9 @@ const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#001425";
+                e.currentTarget.style.backgroundColor = "#000810";
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 26, 51, 0.3)";
+                e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 8, 16, 0.3)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = NAVY;
