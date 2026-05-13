@@ -67,7 +67,7 @@ const CreatePage = () => {
     <div className="min-h-screen pb-32" dir={isHe ? "rtl" : "ltr"} style={{ backgroundColor: PEARL_WHITE }}>
       <div className="px-6 pt-8 pb-6">
         <p className="text-[10px] font-semibold uppercase tracking-widest mb-3" style={{ color: GRAY_TEXT, letterSpacing: "0.1em" }}>
-          {isHe ? "סטודיו AI" : "AI STUDIO"}
+          {t("create.heading")}
         </p>
 
         <h1 className="text-4xl font-black mb-2" style={{ color: NAVY, fontFamily: "'Playfair Display', serif" }}>
@@ -75,7 +75,7 @@ const CreatePage = () => {
         </h1>
 
         <p className="text-base leading-relaxed" style={{ color: GRAY_TEXT }}>
-          {isHe ? "בחרי את הכלי שתרצי לפתוח" : "Choose the tool you'd like to open"}
+          {t("create.subheading")}
         </p>
       </div>
 

@@ -66,7 +66,7 @@ const CookieConsentPopup = ({ onConsent, isVisible }: CookieConsentPopupProps) =
               className="text-xl font-bold text-center mb-4"
               style={{ color: DEEP_MIDNIGHT_BLUE, fontFamily: "'Assistant', sans-serif" }}
             >
-              {isHe ? "הגדרות עוגיות" : "Cookie Settings"}
+              {t("cookie.settings")}
             </h2>
 
             {/* Message */}
@@ -187,7 +187,7 @@ const CookieConsentPopup = ({ onConsent, isVisible }: CookieConsentPopupProps) =
                   fontFamily: "'Assistant', sans-serif",
                 }}
               >
-                {isHe ? "חזור" : "Back"}
+                {t("cookie.consent.back")}
               </button>
             </div>
           </>
