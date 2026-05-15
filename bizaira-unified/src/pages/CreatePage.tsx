@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useI18n } from "@/lib/i18n";
 import {
-  Camera, MessageSquare, BarChart3, CalendarClock, DollarSign, BookOpen,
+  Camera, MessageSquare, BarChart3,
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 
@@ -39,27 +39,6 @@ const CreatePage = () => {
       titleKey: "tool.analytics.title",
       descKey: "tool.analytics.desc",
       route: "/create/analytics",
-    },
-    {
-      id: "time",
-      icon: CalendarClock,
-      titleKey: "tool.time.title",
-      descKey: "tool.time.desc",
-      route: "/create/time",
-    },
-    {
-      id: "pricing",
-      icon: DollarSign,
-      titleKey: "tool.pricing.title",
-      descKey: "tool.pricing.desc",
-      route: "/create/pricing",
-    },
-    {
-      id: "journal",
-      icon: BookOpen,
-      titleKey: "tool.journal.title",
-      descKey: "tool.journal.desc",
-      route: "/journal",
     },
   ];
 

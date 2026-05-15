@@ -145,7 +145,7 @@ const DashboardPage = () => {
   const MIDNIGHT_BLUE = "#020817";
   const CREAM = "#FAF9F6";
   const PURE_WHITE = "#FFFFFF";
-  const CARD_RADIUS = "48px 64px 24px 56px / 56px 34px 58px 42px";
+  const CARD_RADIUS = "60px 60px 52px 52px / 50px 50px 42px 42px";
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#020817]" style={{ fontFamily: "Heebo, Assistant, sans-serif" }}>
@@ -197,7 +197,7 @@ const DashboardPage = () => {
 
       <div className="max-w-7xl mx-auto px-6 pb-20 space-y-10">
         <div className="grid gap-6 lg:grid-cols-4">
-          <div className="rounded-[28px] border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderColor: "rgba(2, 8, 23, 0.08)" }}>
+          <div className="border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)" }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#020817]">
                 <TrendingUp size={24} color={PURE_WHITE} strokeWidth={1.5} />
@@ -211,7 +211,7 @@ const DashboardPage = () => {
             <p className="text-xs mt-2 text-[#3B4A66]">{profile?.credits_used || 0}/{profile?.credits_total || 0}</p>
           </div>
 
-          <div className="rounded-[28px] border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderColor: "rgba(2, 8, 23, 0.08)" }}>
+          <div className="border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)" }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#020817]">
                 <Wand2 size={24} color={PURE_WHITE} strokeWidth={1.5} />
@@ -225,7 +225,7 @@ const DashboardPage = () => {
             <p className="text-xs mt-2 text-[#3B4A66]">{stats.creationsCount}/∞</p>
           </div>
 
-          <div className="rounded-[28px] border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderColor: "rgba(2, 8, 23, 0.08)" }}>
+          <div className="border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)" }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#020817]">
                 <MessageSquare size={24} color={PURE_WHITE} strokeWidth={1.5} />
@@ -239,7 +239,7 @@ const DashboardPage = () => {
             <p className="text-xs mt-2 text-[#3B4A66]">{stats.downloadsCount}/∞</p>
           </div>
 
-          <div className="rounded-[28px] border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderColor: "rgba(2, 8, 23, 0.08)" }}>
+          <div className="border bg-white p-6 shadow-[0_18px_45px_-24px_rgba(2,8,23,0.08)]" style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)" }}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#020817]">
                 <BarChart3 size={24} color={PURE_WHITE} strokeWidth={1.5} />
@@ -262,7 +262,7 @@ const DashboardPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="rounded-3xl border bg-white p-10" style={{ borderColor: "rgba(2, 8, 23, 0.08)", boxShadow: "0 24px 48px -12px rgba(2, 8, 23, 0.12)" }}>
+        <div className="border bg-white p-10" style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)", boxShadow: "0 24px 48px -12px rgba(2, 8, 23, 0.12)" }}>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between mb-10">
             <div>
               <h2 className="text-4xl font-semibold mb-4" style={{ fontWeight: 300, color: MIDNIGHT_BLUE }}>
@@ -287,8 +287,8 @@ const DashboardPage = () => {
               {creations.slice(0, 5).map((creation) => (
                 <div
                   key={creation.id}
-                  className="group rounded-3xl border bg-[#FAF9F6] p-6 transition-all duration-300 ease-in-out hover:-translate-y-1"
-                  style={{ borderColor: "rgba(2, 8, 23, 0.08)", boxShadow: "0 18px 34px -22px rgba(2, 8, 23, 0.12)" }}
+                  className="group border bg-[#FAF9F6] p-6 transition-all duration-300 ease-in-out hover:-translate-y-1"
+                  style={{ borderRadius: CARD_RADIUS, borderColor: "rgba(2, 8, 23, 0.08)", boxShadow: "0 18px 34px -22px rgba(2, 8, 23, 0.12)" }}
                 >
                   <div className="flex items-center justify-between gap-6">
                     <div className="flex items-center gap-5">
