@@ -1,12 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import bizairaLogo from "@/assets/bizaira-logo.png";
 import { useI18n } from "@/lib/i18n";
-
-const NAVY = "#001830";
-const OFFWHITE = "#F8F9FA";
-const WHITE = "#FFFFFF";
-const DARK_TEXT = "#2D3748";
 
 const OnboardingWelcome = () => {
   const navigate = useNavigate();
@@ -17,94 +12,61 @@ const OnboardingWelcome = () => {
     setLang(option);
   };
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
   const handleContinue = () => {
     navigate("/onboarding");
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA]" dir={isHe ? "rtl" : "ltr"}>
-      <div className="max-w-4xl mx-auto px-4 py-10">
-        <div className="rounded-[32px] bg-white px-6 py-6">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <img src={bizairaLogo} alt="BizAIra" className="h-11 w-auto" />
-              <div>
-                <div className="text-xs uppercase tracking-[0.32em] font-semibold" style={{ color: NAVY }}>
-                  {t("onboarding.welcome.step")}
-                </div>
-                <h1 className="mt-2 text-3xl font-bold" style={{ color: NAVY }}>
-                  {t("onboarding.welcome.title")}
-                </h1>
-              </div>
-            </div>
-            <button
-              onClick={handleBack}
-              className="inline-flex items-center gap-2 rounded-2xl border border-[#001830] px-4 py-3 text-sm font-semibold"
-              style={{ color: NAVY, backgroundColor: WHITE }}
-            >
-              <ArrowLeft size={16} />
-              {t("ui.back")}
-            </button>
-          </div>
-
-          <div className="mt-6 h-2 overflow-hidden rounded-full bg-[#F8F9FA]">
-            <div className="h-full rounded-full" style={{ width: "25%", backgroundColor: NAVY }} />
-          </div>
-        </div>
-
-        <div className="rounded-[32px] bg-white mt-8 px-6 py-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <button
-              type="button"
-              onClick={() => handleSelect("en")}
-              className="flex h-40 flex-col items-center justify-center rounded-xl border border-gray-200 bg-[#F8F9FA] text-lg font-semibold text-[#2D3748] transition-colors duration-200 ease-in-out focus:outline-none"
-              style={{
-                backgroundColor: lang === "en" ? NAVY : OFFWHITE,
-                color: lang === "en" ? WHITE : DARK_TEXT,
-                borderColor: lang === "en" ? NAVY : "#E5E7EB",
-              }}
-            >
-              {t("onboarding.languages.english")}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSelect("he")}
-              className="flex h-40 flex-col items-center justify-center rounded-xl border border-gray-200 bg-[#F8F9FA] text-lg font-semibold text-[#2D3748] transition-colors duration-200 ease-in-out focus:outline-none"
-              style={{
-                backgroundColor: lang === "he" ? NAVY : OFFWHITE,
-                color: lang === "he" ? WHITE : DARK_TEXT,
-                borderColor: lang === "he" ? NAVY : "#E5E7EB",
-              }}
-            >
-              {t("onboarding.languages.hebrew")}
-            </button>
-          </div>
-
-          <div className="mt-8 rounded-[24px] bg-[#F8F9FA] p-5">
-            <p className="text-sm leading-7" style={{ color: NAVY }}>
+    <div className="min-h-screen bg-[#000B18] flex items-center justify-center px-4 py-10" dir={isHe ? "rtl" : "ltr"}>
+      <div className="w-full max-w-3xl">
+        <div className="rounded-[28px] border border-[#F5F5DC]/10 bg-[#000B18]/60 backdrop-blur-xl p-8 shadow-[0_40px_120px_rgba(0,11,24,0.24)]">
+          <div className="text-center">
+            <img src={bizairaLogo} alt="BizAIra" className="mx-auto h-12" />
+            <p className="mt-6 text-xs uppercase tracking-[0.35em] text-[#F5F5DC]/70">
+              {t("onboarding.welcome.step")}
+            </p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[0.08em] text-[#F5F5DC]">
+              {t("onboarding.welcome.title")}
+            </h1>
+            <p className="mt-4 text-sm leading-7 text-[#F5F5DC]/75 max-w-2xl mx-auto">
               {t("onboarding.welcome.description")}
             </p>
           </div>
 
-          <div className="mt-6 border-t border-[#E5E7EB] pt-6">
-            <div className="flex flex-col items-center gap-4">
-              <div className="text-sm font-medium" style={{ color: NAVY }}>
-                {t("onboarding.selectedLanguage", { lang: isHe ? "עברית" : "English" })}
-              </div>
-              <button
-                onClick={handleContinue}
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#001830] px-8 py-3 text-sm font-semibold text-white"
-              >
-                {isHe ? "המשך" : "Continue"}
-                <ArrowRight size={16} />
-              </button>
-            </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {([
+              { key: "en", label: t("onboarding.languages.english") },
+              { key: "he", label: t("onboarding.languages.hebrew") },
+            ] as const).map((option) => {
+              const selected = lang === option.key;
+              return (
+                <button
+                  key={option.key}
+                  type="button"
+                  onClick={() => handleSelect(option.key)}
+                  className={`min-h-[11rem] rounded-[24px] border p-6 text-left text-sm font-semibold transition-all duration-300 ${
+                    selected
+                      ? "border-[#F5F5DC]/40 bg-[#F5F5DC]/10 text-[#F5F5DC]"
+                      : "border-[#F5F5DC]/10 bg-[#000B18]/40 text-[#F5F5DC]/90 hover:border-[#F5F5DC]/25 hover:bg-[#F5F5DC]/08"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
           </div>
+
+          <div className="mt-8 rounded-[24px] border border-[#F5F5DC]/10 bg-[#F5F5DC]/5 p-5 text-center text-sm text-[#F5F5DC]/75">
+            {t("onboarding.selectedLanguage", { lang: isHe ? "עברית" : "English" })}
+          </div>
+
+          <button
+            onClick={handleContinue}
+            className="mt-6 w-full rounded-[24px] bg-[#F5F5DC] px-6 py-4 text-sm font-semibold text-[#000B18] uppercase tracking-[0.08em] transition duration-300"
+          >
+            {t("onboarding.continue")}
+            <ArrowRight size={16} className="inline-block ms-2" />
+          </button>
         </div>
       </div>
     </div>

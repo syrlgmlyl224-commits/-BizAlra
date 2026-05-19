@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ArrowLeft, ArrowRight, Briefcase, User, Mail, Lock, Wand2, BarChart3, MessageSquare, Camera } from "lucide-react";
-import SparkleIcon from "@/components/SparkleIcon";
+import { Sparkles, ArrowLeft, ArrowRight, Briefcase, User, Mail, Lock, Wand2, BarChart3, MessageSquare, Camera, Check } from "lucide-react";
 import bizairaLogo from "@/assets/bizaira-logo.png";
 import { useI18n } from "@/lib/i18n";
 import { getGuestSession } from "@/lib/guest-session";
@@ -25,6 +24,10 @@ const OnboardingPage = () => {
   const businessTypes = BUSINESS_TYPE_KEYS.map((key) => ({ key, label: t(`onboarding.business.${key}`) }));
   const BackArrow = lang === "he" ? ArrowLeft : ArrowRight;
   const NextArrow = lang === "he" ? ArrowRight : ArrowLeft;
+
+  const selectedBusinessLabel = businessTypes.find((item) => item.key === businessType)?.label || "";
+  const canContinueStep1 = userName.trim().length > 0;
+  const canContinueStep2 = email.trim().length > 0 && password.trim().length > 0;
 
   const handleFinish = () => {
     const isGuest = safeGetSessionItem("onboarding_complete") === "true" && !!getGuestSession();
@@ -55,207 +58,187 @@ const OnboardingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8 bg-background" style={{fontFamily: "'Montserrat', sans-serif"}}>
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-6">
-          <img src={bizairaLogo} alt="BizAIra" className="h-14 mx-auto mb-3" />
-          <div className="flex items-center justify-center gap-2 mb-1">
-            {[0, 1, 2, 3].map((s) => (
-              <div
-                key={s}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  s === step ? "w-8 gradient-glow" : s < step ? "w-4 bg-primary/40" : "w-4 bg-border"
-                }`}
-              />
-            ))}
+    <div className="min-h-screen bg-[#000B18] flex items-center justify-center px-4 py-10" dir={lang === "he" ? "rtl" : "ltr"}>
+      <div className="w-full max-w-3xl">
+        <div className="rounded-[28px] border border-[#F5F5DC]/10 bg-[#000B18]/60 backdrop-blur-xl p-8 shadow-[0_40px_120px_rgba(0,11,24,0.2)]">
+          <div className="text-center mb-10">
+            <img src={bizairaLogo} alt="BizAIra" className="mx-auto h-12" />
+            <div className="mt-4 text-xs uppercase tracking-[0.4em] text-[#F5F5DC]/70">
+              {t("onboarding.stepCounter", { num: step + 1, total: 4 })}
+            </div>
           </div>
-        </div>
 
-        {/* Step 0: Business Type */}
-        {step === 0 && (
-          <div className="glass-card rounded-2xl p-6 glow-shadow animate-float-up">
-            <div className="flex items-center gap-2 mb-4">
-              <Briefcase size={20} className="text-primary" />
-              <h2 className="text-lg font-bold text-foreground" style={{fontFamily: "'Montserrat', sans-serif", fontWeight: 700}}>
-                {t("onboarding.page.business.title")}
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {businessTypes.map((type) => (
-                <button
-                  key={type.key}
-                  onClick={() => setBusinessType(type.key)}
-                  className={`text-sm rounded-xl px-3 py-2.5 border transition-all text-start ${
-                    businessType === type.key
-                      ? "border-primary bg-secondary text-foreground font-semibold"
-                      : "border-border bg-background text-muted-foreground hover:border-primary/30"
-                  }`}
-                  style={{fontFamily: "'Montserrat', sans-serif"}}
-                >
-                  {type.label}
-                </button>
-              ))}
-            </div>
-            <button
-              onClick={() => businessType && setStep(1)}
-              disabled={!businessType}
-              className="w-full gradient-glow text-primary-foreground font-bold py-3 rounded-2xl mt-5 flex items-center justify-center gap-2 hover:scale-[1.02] transition-all disabled:opacity-40 disabled:hover:scale-100"
-              style={{fontFamily: "'Montserrat', sans-serif"}}
-            >
-              {t("onboarding.continue")}
-              <NextArrow size={16} />
-            </button>
-          </div>
-        )}
+          {step === 0 && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-3xl font-semibold tracking-[0.08em] text-[#F5F5DC]">
+                  {t("onboarding.page.business.title")}
+                </h1>
+                <p className="mt-4 text-sm leading-7 text-[#F5F5DC]/75">
+                  {t("onboarding.welcome.description")}
+                </p>
+              </div>
 
-        {/* Step 1: Name */}
-        {step === 1 && (
-          <div className="glass-card rounded-2xl p-6 glow-shadow animate-float-up">
-            <div className="flex items-center gap-2 mb-4">
-              <User size={20} className="text-primary" />
-              <h2 className="text-lg font-bold text-foreground" style={{fontFamily: "'Montserrat', sans-serif", fontWeight: 700}}>
-                {t("onboarding.page.name.title")}
-              </h2>
-            </div>
-            <input
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder={t("onboarding.page.name.placeholder")}
-              className="w-full bg-background border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-              style={{fontFamily: "'Montserrat', sans-serif"}}
-              autoFocus
-            />
-            <div className="flex gap-2 mt-5">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {businessTypes.map((type) => (
+                  <button
+                    key={type.key}
+                    onClick={() => setBusinessType(type.key)}
+                    className={`min-h-[10rem] rounded-[24px] border p-5 text-left transition-all duration-300 ${
+                      businessType === type.key
+                        ? "border-[#F5F5DC]/40 bg-[#F5F5DC]/10"
+                        : "border-[#F5F5DC]/10 bg-[#000B18]/40 hover:border-[#F5F5DC]/25 hover:bg-[#F5F5DC]/08"
+                    }`}
+                  >
+                    <span className="text-sm font-semibold text-[#F5F5DC]">{type.label}</span>
+                  </button>
+                ))}
+              </div>
+
               <button
-                onClick={() => setStep(0)}
-                className="bg-secondary border border-border px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground transition-all"
-              >
-                <BackArrow size={16} />
-              </button>
-              <button
-                onClick={() => userName.trim() && setStep(2)}
-                disabled={!userName.trim()}
-                className="flex-1 gradient-glow text-primary-foreground font-bold py-3 rounded-2xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all disabled:opacity-40 disabled:hover:scale-100"
-                style={{fontFamily: "'Montserrat', sans-serif"}}
+                onClick={() => businessType && setStep(1)}
+                disabled={!businessType}
+                className="w-full rounded-[20px] bg-[#F5F5DC] px-6 py-3 text-sm font-semibold text-[#000B18] uppercase tracking-[0.08em] transition duration-300 disabled:opacity-40"
               >
                 {t("onboarding.continue")}
-                <NextArrow size={16} />
               </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Step 2: Email + Password */}
-        {step === 2 && (
-          <div className="glass-card rounded-2xl p-6 glow-shadow animate-float-up">
-            <div className="flex items-center gap-2 mb-4">
-              <Mail size={20} className="text-primary" />
-              <h2 className="text-lg font-bold text-foreground" style={{fontFamily: "'Montserrat', sans-serif", fontWeight: 700}}>
-                {t("onboarding.page.login.title")}
-              </h2>
-            </div>
-            <div className="space-y-3">
+          {step === 1 && (
+            <div className="space-y-6">
               <div>
-                <label className="text-xs font-semibold text-muted-foreground mb-1 block" style={{fontFamily: "'Montserrat', sans-serif"}}>
-                  {t("auth.emailLabel")}
-                </label>
-                <div className="relative">
-                  <Mail size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <h1 className="text-3xl font-semibold tracking-[0.08em] text-[#F5F5DC]">
+                  {t("onboarding.page.name.title")}
+                </h1>
+              </div>
+
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-[#F5F5DC]/80">{t("auth.fullName")}</label>
+                <input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder={t("onboarding.page.name.placeholder")}
+                  className="w-full rounded-[20px] border border-[#F5F5DC]/10 bg-[#000B18]/30 px-4 py-3 text-[#F5F5DC] placeholder:text-[#F5F5DC]/70 outline-none transition focus:border-[#F5F5DC]/30 focus:ring-2 focus:ring-[#F5F5DC]/10"
+                />
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setStep(0)}
+                  className="w-full rounded-[20px] border border-[#F5F5DC]/15 bg-[#000B18]/30 px-6 py-3 text-sm font-semibold text-[#F5F5DC] transition hover:border-[#F5F5DC]/30"
+                >
+                  <BackArrow size={16} className="inline-block" />
+                </button>
+                <button
+                  onClick={() => canContinueStep1 && setStep(2)}
+                  disabled={!canContinueStep1}
+                  className="w-full rounded-[20px] bg-[#F5F5DC] px-6 py-3 text-sm font-semibold text-[#000B18] uppercase tracking-[0.08em] transition duration-300 disabled:opacity-40"
+                >
+                  {t("onboarding.continue")}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-6">
+              <div>
+                <h1 className="text-3xl font-semibold tracking-[0.08em] text-[#F5F5DC]">
+                  {t("onboarding.page.login.title")}
+                </h1>
+                <p className="mt-4 text-sm leading-7 text-[#F5F5DC]/75">
+                  {t("onboarding.welcome.description")}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-[#F5F5DC]/80">{t("auth.emailLabel")}</label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full bg-background border border-border rounded-xl pe-10 ps-3 py-3 text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                    style={{fontFamily: "'Montserrat', sans-serif"}}
+                    className="w-full rounded-[20px] border border-[#F5F5DC]/10 bg-[#000B18]/30 px-4 py-3 text-[#F5F5DC] placeholder:text-[#F5F5DC]/70 outline-none transition focus:border-[#F5F5DC]/30 focus:ring-2 focus:ring-[#F5F5DC]/10"
                     dir="ltr"
-                    autoFocus
                   />
                 </div>
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-muted-foreground mb-1 block" style={{fontFamily: "'Montserrat', sans-serif"}}>
-                  {t("auth.passwordLabel")}
-                </label>
-                <div className="relative">
-                  <Lock size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <div>
+                  <label className="block text-sm font-medium text-[#F5F5DC]/80">{t("auth.passwordLabel")}</label>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-background border border-border rounded-xl pe-10 ps-3 py-3 text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                    style={{fontFamily: "'Montserrat', sans-serif"}}
+                    className="w-full rounded-[20px] border border-[#F5F5DC]/10 bg-[#000B18]/30 px-4 py-3 text-[#F5F5DC] placeholder:text-[#F5F5DC]/70 outline-none transition focus:border-[#F5F5DC]/30 focus:ring-2 focus:ring-[#F5F5DC]/10"
                     dir="ltr"
                   />
                 </div>
               </div>
-            </div>
-            <div className="flex gap-2 mt-5">
-              <button
-                onClick={() => setStep(1)}
-                className="bg-secondary border border-border px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground transition-all"
-              >
-                <BackArrow size={16} />
-              </button>
-              <button
-                onClick={() => email && password && setStep(3)}
-                disabled={!email || !password}
-                className="flex-1 gradient-glow text-primary-foreground font-bold py-3 rounded-2xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all disabled:opacity-40 disabled:hover:scale-100"
-                style={{fontFamily: "'Montserrat', sans-serif"}}
-              >
-                <Sparkles size={16} />
-                {t("auth.createAccount")}
-              </button>
-            </div>
-          </div>
-        )}
 
-        {/* Step 3: App explanation */}
-        {step === 3 && (
-          <div className="animate-float-up">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-foreground mb-2" style={{fontFamily: "'Playfair Display', serif", color: "#000810"}}>
-                {t("onboarding.page.welcomeUser").replace("{{userName}}", userName)}
-              </h2>
-              <p className="text-sm text-muted-foreground" style={{fontFamily: "'Montserrat', sans-serif"}}>
-                {t("onboarding.page.features.welcome")}
-              </p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <button
+                  onClick={() => setStep(1)}
+                  className="w-full rounded-[20px] border border-[#F5F5DC]/15 bg-[#000B18]/30 px-6 py-3 text-sm font-semibold text-[#F5F5DC] transition hover:border-[#F5F5DC]/30"
+                >
+                  <BackArrow size={16} className="inline-block" />
+                </button>
+                <button
+                  onClick={() => canContinueStep2 && setStep(3)}
+                  disabled={!canContinueStep2}
+                  className="w-full rounded-[20px] bg-[#F5F5DC] px-6 py-3 text-sm font-semibold text-[#000B18] uppercase tracking-[0.08em] transition duration-300 disabled:opacity-40"
+                >
+                  {t("auth.createAccount")}
+                </button>
+              </div>
             </div>
+          )}
 
-            <div className="space-y-3 mb-6">
-              {features.map((feat, i) => {
-                const Icon = feat.icon;
-                return (
-                  <div
-                    key={i}
-                    className="glass-card rounded-2xl p-4 flex items-start gap-3 animate-float-up"
-                    style={{ animationDelay: `${i * 80}ms`, fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    <div className="w-9 h-9 rounded-xl gradient-glow flex items-center justify-center shrink-0 shadow-md">
-                      <Icon size={18} className="text-primary-foreground" />
+          {step === 3 && (
+            <div className="space-y-8">
+              <div className="text-center">
+                <p className="text-sm uppercase tracking-[0.35em] text-[#F5F5DC]/60">
+                  {t("onboarding.businessInfo.title")}
+                </p>
+                <h1 className="mt-4 text-4xl font-semibold tracking-[0.08em] text-[#F5F5DC]">
+                  {t("onboarding.businessInfo.perfect")}
+                </h1>
+                <p className="mt-4 text-sm leading-7 text-[#F5F5DC]/70 max-w-2xl mx-auto">
+                  {t("onboarding.businessInfo.confirmationDescription", { businessType: selectedBusinessLabel })}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {features.map((feature, index) => {
+                  const Icon = feature.icon;
+                  return (
+                    <div key={index} className="rounded-[24px] border border-[#F5F5DC]/10 bg-[#000B18]/30 p-5 flex items-start gap-4">
+                      <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-3xl border border-[#F5F5DC]/15 bg-[#F5F5DC]/10 text-[#F5F5DC]">
+                        <Check size={18} />
+                      </div>
+                      <div>
+                        <h2 className="text-base font-semibold text-[#F5F5DC]">{feature.title}</h2>
+                        <p className="mt-1 text-sm leading-6 text-[#F5F5DC]/75">{feature.desc}</p>
+                      </div>
                     </div>
-                    <div>
-                      <div className="font-semibold text-sm text-foreground" style={{fontWeight: 700}}>{feat.title}</div>
-                      <div className="text-xs text-muted-foreground mt-0.5">{feat.desc}</div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            <button
-              onClick={handleFinish}
-              className="w-full gradient-glow glow-shadow text-primary-foreground font-bold py-4 rounded-2xl text-base flex items-center justify-center gap-2 hover:scale-[1.02] transition-all animate-glow-pulse"
-              style={{fontFamily: "'Montserrat', sans-serif"}}
-            >
-              <SparkleIcon size={16} />
-              {t("onboarding.page.getStarted")}
-            </button>
-          </div>
-        )}
+              <button
+                onClick={handleFinish}
+                className="w-full rounded-[24px] bg-[#F5F5DC] px-8 py-4 text-sm font-semibold text-[#000B18] uppercase tracking-[0.08em] transition duration-300"
+              >
+                <span className="inline-flex items-center justify-center gap-2">
+                  <Sparkles size={16} />
+                  {t("onboarding.page.getStarted")}
+                </span>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

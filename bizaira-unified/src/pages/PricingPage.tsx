@@ -1,5 +1,4 @@
 import { Check, Rocket } from "lucide-react";
-import SparkleIcon from "@/components/SparkleIcon";
 import { useI18n } from "@/lib/i18n";
 
 const PricingPage = () => {
@@ -79,52 +78,81 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="px-4 pt-6 pb-4">
-      <div className="text-center mb-8 animate-float-up">
-        <h1 className="text-3xl font-extrabold mb-2 text-foreground">{t("pricing.title")}</h1>
-        <p className="text-muted-foreground text-sm">{t("pricing.subtitle")}</p>
-      </div>
+    <div className="min-h-screen bg-[#F8F9FA] text-[#001830]" dir={lang === "he" ? "rtl" : "ltr"} style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-12 max-w-3xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-[#001830] sm:text-4xl">
+            {t("pricing.title")}
+          </h1>
+          <p className="mt-4 text-base leading-7 text-[#475569] sm:text-lg">
+            {t("pricing.subtitle")}
+          </p>
+        </div>
 
-      <div className="space-y-4 max-w-sm mx-auto">
-        {plans.map((plan, i) => {
-          const featureList = lang === "he" ? plan.featuresHe : plan.features;
-          return (
-            <div
-              key={plan.name}
-              className={`rounded-2xl p-5 transition-all duration-300 animate-float-up ${plan.highlight ? "gradient-glow glow-shadow relative" : "glass-card"}`}
-              style={{ animationDelay: `${i * 120}ms` }}
-            >
-              {plan.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-card text-xs font-bold px-3 py-1 rounded-full gradient-glow-text border border-border">
-                  <SparkleIcon size={10} className="inline me-1" />
-                  {t("pricing.popular")}
+        <div className="grid gap-6 xl:grid-cols-3">
+          {plans.map((plan, i) => {
+            const featureList = lang === "he" ? plan.featuresHe : plan.features;
+            const isPro = plan.highlight;
+            return (
+              <div
+                key={plan.name}
+                className={`group relative flex min-h-[30rem] flex-col justify-between overflow-hidden rounded-[16px] border border-[#E0E0E0] bg-white/90 p-6 text-[#001830] transition-all duration-300 ease-in-out hover:bg-[#0a192f] hover:text-white ${
+                  isPro ? "lg:min-h-[34rem] shadow-sm ring-1 ring-[#2563EB]/10" : "shadow-sm"
+                }`}
+                style={{ animationDelay: `${i * 120}ms` }}
+              >
+                {isPro && (
+                  <div className="absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded-full border border-[#2563EB]/30 bg-white/95 px-4 py-1 text-xs font-semibold tracking-[0.12em] text-[#2563EB] shadow-sm">
+                    {lang === "he" ? "הפופולרי ביותר" : "Most Popular"}
+                  </div>
+                )}
+
+                <div className="space-y-8 pt-6 text-center">
+                  <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-[#E0E0E0] bg-[#F8F9FA] text-[#001830] transition-colors duration-300 group-hover:border-transparent group-hover:bg-white/10 group-hover:text-white">
+                    <Check size={26} strokeWidth={2} className="transition-colors duration-300 group-hover:text-white" />
+                  </div>
+                  <div className="space-y-4 px-2">
+                    <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[#64748B]">
+                      {lang === "he" ? "תוכנית" : "Plan"}
+                    </p>
+                    <h2 className="text-2xl font-semibold tracking-tight transition-colors duration-300 group-hover:text-white">
+                      {plan.name}
+                    </h2>
+                    <div className="space-y-1">
+                      <p className="text-5xl font-bold tracking-tight transition-colors duration-300 group-hover:text-white">
+                        {plan.price}
+                      </p>
+                      {'period' in plan && (
+                        <p className="text-sm text-[#64748B] transition-colors duration-300 group-hover:text-white/80">
+                          {(plan as any).period}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-3 px-2 text-left text-[#475569] transition-colors duration-300 group-hover:text-white/90">
+                    {featureList.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3 text-sm leading-6">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E0E0E0] bg-[#F8F9FA] text-[#001830] transition-colors duration-300 group-hover:border-white group-hover:bg-white/10 group-hover:text-white">
+                          <Check size={14} strokeWidth={2} />
+                        </span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              )}
-              <div className="flex items-center justify-between mb-3">
-                <h3 className={`text-lg font-bold ${plan.highlight ? "text-primary-foreground" : "text-foreground"}`}>{plan.name}</h3>
-                <div className="text-end">
-                  <span className={`text-xl font-extrabold ${plan.highlight ? "text-primary-foreground" : "gradient-glow-text"}`}>{plan.price}</span>
-                  {"period" in plan && <span className={`text-xs ms-1 ${plan.highlight ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{(plan as any).period}</span>}
-                </div>
+
+                <button className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-[#E0E0E0] bg-white px-5 py-3 text-sm font-semibold text-[#001830] transition-all duration-300 hover:bg-white/10 hover:text-white group-hover:border-transparent group-hover:bg-white/10 group-hover:text-white">
+                  <Rocket size={16} className="transition-colors duration-300 group-hover:text-white" />
+                  {plan.name === "Free" ? t("pricing.startFree") : t("pricing.upgradeNow")}
+                </button>
               </div>
-              <ul className="space-y-2 mb-4">
-                {featureList.map((feature) => (
-                  <li key={feature} className={`flex items-center gap-2 text-sm ${plan.highlight ? "text-primary-foreground/90" : "text-muted-foreground"}`}>
-                    <Check size={14} className={plan.highlight ? "text-primary-foreground" : "text-primary"} />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <button className={`w-full py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] ${plan.highlight ? "bg-card text-foreground hover:bg-card/90" : "gradient-glow text-primary-foreground glow-shadow"}`}>
-                <Rocket size={16} />
-                {plan.name === "Free" ? t("pricing.startFree") : t("pricing.upgradeNow")}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <p className="text-center text-xs text-muted-foreground mt-6">{t("pricing.footer")}</p>
+        <p className="mt-10 text-center text-sm text-[#64748B]">{t("pricing.footer")}</p>
+      </div>
     </div>
   );
 };
